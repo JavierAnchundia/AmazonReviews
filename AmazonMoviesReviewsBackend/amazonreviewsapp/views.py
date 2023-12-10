@@ -91,9 +91,7 @@ class ReviewView(APIView):
 
 
     def post(self, request, format=None):
-        print("this isREQUEST {} ".format(request))
-        print(request.data.get("date_start"))
-        print(request.data.get("date_end"))
+            
 
         mainSQLQuery = "SELECT * FROM amazonreviewsapp_review "
         countUsersQuery = "SELECT COUNT(DISTINCT userId)  FROM (SELECT * FROM amazonreviewsapp_review "
@@ -105,9 +103,7 @@ class ReviewView(APIView):
 
         conditionsQuery = ""
 
-        print(request.data.get("dateFilterOn") == "True" )
-        print(request.data.get("movieCodeFilterOn") == "True")
-        print(request.data.get("userNameFilterOn") == "True")
+
 
         #Primera condicion para ver si se hizo uso de algun filtro
         if (request.data.get("dateFilterOn") == "True" or request.data.get("movieCodeFilterOn") == "True" or request.data.get("userNameFilterOn") == "True"):
@@ -117,10 +113,7 @@ class ReviewView(APIView):
                 and request.data.get("dateFilterOn") == "True") :
             conditionsQuery += "time between '{}' and '{}'".format(request.data.get("date_start"),
                                                             request.data.get("date_end"))
-            print(request.data.get("dateFilterOn")  )
 
-            print(request.data.get("dateFilterOn") == "True")
-            print("SASKDASKD")
 
             # Si hay otros filtros agregar un "and"
             if (request.data.get("movieCodeFilterOn") == "True"
@@ -168,7 +161,6 @@ class ReviewView(APIView):
                     dateTimeScoreQuery += conditionsQuery + " GROUP BY time ORDER BY score DESC LIMIT 10) AS a"
                     dateTimeHelpFullnessQuery += conditionsQuery + " GROUP BY time ORDER BY score DESC LIMIT 10) AS a"
 
-        print(mainSQLQuery)
         with connection.cursor() as cursor:
             cursor.execute(mainSQLQuery)
             columns = [col[0] for col in cursor.description]
@@ -192,13 +184,9 @@ class ReviewView(APIView):
             cursor.execute(dateTimeHelpFullnessQuery)
             timeHelpFullNess = cursor.fetchall()
 
-            print(type(dataList ))
             data = {"mainInfo":dataList, "numberOfUsers":numberOfUsers, "maxScore":maxScore ,
                     "minScore":minScore, "promScore":promScore, "timeScore":timeScore ,"timeHelpFullNess":timeHelpFullNess}
 
-        #serializer = SnippetSerializer(data=request.data)
-        #if serializer.is_valid():
-            #serializer.save()
-            #return Response(serializer.data, status=status.HTTP_201_CREATED)
+
         return JsonResponse(data)
 
