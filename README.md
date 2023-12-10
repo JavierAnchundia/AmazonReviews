@@ -1,5 +1,5 @@
 # AmazonReviews
- La aplicación muetra la información sobre los reviews de películas en Amazon, mostrándo indicadores importantes para el análisis y toma de  decisiones. \n
+ La aplicación muetra la información sobre los reviews de películas en Amazon, mostrándo indicadores importantes para el análisis y toma de  decisiones. 
  
  En este repositorio se encuentra el código del FrontEnd y el BackEnd.
  
