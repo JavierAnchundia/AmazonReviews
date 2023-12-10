@@ -117,7 +117,7 @@ class ReviewView(APIView):
                 and request.data.get("dateFilterOn") == "True") :
             conditionsQuery += "time between '{}' and '{}'".format(request.data.get("date_start"),
                                                             request.data.get("date_end"))
-            print(request.data.get("dateFilterOn"))
+            print(request.data.get("dateFilterOn")  )
 
             print(request.data.get("dateFilterOn") == "True")
             print("SASKDASKD")
